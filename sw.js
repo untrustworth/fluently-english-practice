@@ -1,4 +1,4 @@
-const CACHE_NAME = 'english-learning-app-v2';
+const CACHE_NAME = 'english-learning-app-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,8 +9,8 @@ const urlsToCache = [
   '/js/storage.js',
   '/manifest.json',
   '/assets/Fluently.png',
-  '/assets/icons/icon-192x192.png',
-  '/assets/icons/icon-512x512.png'
+  '/assets/icons/FluentlyIcon_192.png',
+  '/assets/icons/FluentlyIcon_512.png'
 ];
 
 self.addEventListener('install', (event) => {
