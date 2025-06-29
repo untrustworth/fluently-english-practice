@@ -1,0 +1,46 @@
+graph TB
+    subgraph "ユーザー環境"
+        User[👤 妻（劇場職員）]
+        Device[📱 スマートフォン<br/>Safari/Chrome]
+    end
+
+    subgraph "ブラウザ内処理"
+        PWA[🌐 PWAアプリ]
+        WebSpeech[🎤🔊 Web Speech API<br/>音声認識・合成]
+        LocalStorage[💾 LocalStorage<br/>シチュエーション保存]
+        JS[⚙️ JavaScript<br/>UI制御・API連携]
+    end
+
+    subgraph "外部サービス"
+        GitHub[📦 GitHub Pages<br/>静的ホスティング<br/>（無料）]
+        Gemini[🤖 Google AI Studio<br/>Gemini 2.0 Flash 001<br/>会話生成・ヒント機能<br/>（無料枠活用）]
+    end
+
+    subgraph "データフロー"
+        direction TB
+        A[音声入力] --> B[音声認識]
+        B --> C[テキスト化]
+        C --> D[Gemini API送信]
+        D --> E[AI応答生成]
+        E --> G[音声合成]
+        G --> H[音声出力]
+        
+        I[ヒント要求] --> J[日本語入力]
+        J --> K[Gemini翻訳API]
+        K --> L[英語表現提案]
+    end
+
+    User --> Device
+    Device --> PWA
+    PWA --> WebSpeech
+    PWA --> LocalStorage
+    PWA --> JS
+    PWA <--> GitHub
+    JS <--> Gemini
+
+    style User fill:#e1f5fe
+    style PWA fill:#f3e5f5
+    style GitHub fill:#e8f5e8
+    style Gemini fill:#fff3e0
+    style WebSpeech fill:#fce4ec
+    style LocalStorage fill:#f1f8e9

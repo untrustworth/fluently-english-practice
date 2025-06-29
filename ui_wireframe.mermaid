@@ -1,0 +1,55 @@
+flowchart TD
+    subgraph "📱 ホーム画面"
+        A1["🖼️ Fluentlyロゴ画像<br/>(ピンク→紫グラデーション背景)<br/><br/>💬 会話をはじめる<br/>(半透明ボタン)<br/><br/>📋 シチュエーションを選ぶ<br/>(半透明ボタン)<br/><br/>⚙️ 設定<br/>(半透明ボタン)<br/><br/>※全ボタン同一サイズ(btn-medium)"]
+    end
+
+    subgraph "📋 シチュエーション選択画面"
+        B1["← 戻る | シチュエーション選択<br/><br/>📝 プリセット一覧（クリックで即開始）<br/>□ チケット予約<br/>□ トイレ案内<br/>□ 今日の公演情報<br/>□ 座席相談<br/>□ 忘れ物対応<br/>□ 道案内<br/><br/>✏️ 新規シチュエーション登録<br/>[タイトルを入力]<br/>[説明を入力]<br/><br/>[カスタム追加]ボタン"]
+    end
+
+    subgraph "💬 会話画面"
+        C1["(🏠) 現在: チケット予約 (🎲)<br/>小円形ボタン | 中央情報表示 | 小円形ボタン<br/><br/>💭 日本語入力でヒント取得<br/>[日本語入力欄]<br/>[ヒントを取得]ボタン<br/><br/>🎤 話す<br/>(大きな丸ボタン)<br/><br/>📜 会話ログを表示<br/>(押している間のみ表示)<br/><br/>⚠️ 注意: 入力内容がGoogle AI学習に利用される<br/>可能性があります。個人情報の入力はお控えください。"]
+    end
+
+    subgraph "⚙️ 管理画面"
+        D1["← 戻る | 設定<br/><br/>📊 シチュエーション設定<br/><br/>🔧 音量・その他"]
+    end
+
+    subgraph "📊 シチュエーション管理画面"
+        E1["← 戻る | シチュエーション管理<br/><br/>📝 プリセット一覧<br/>□ チケット予約 [編集][削除]<br/>□ カスタム: VIP席案内 [編集][削除]<br/><br/>保存ボタン"]
+    end
+
+    subgraph "🔧 設定画面"
+        F1["← 戻る | 設定<br/><br/>🔑 APIキー設定<br/>✅ APIキー設定済み<br/>[Google AI Studio APIキー入力欄]<br/>[保存] [削除]<br/><br/>🔊 音声設定<br/>話速: [スライダー]<br/>音量: [スライダー]<br/><br/>📊 使用統計<br/>日別使用量: 45/1500<br/>時間別使用量: 12/1000"]
+    end
+
+    subgraph "❌ エラーモーダル"
+        G1["⚠️ エラー<br/><br/>APIエラー: 管理者にお問い合わせください<br/><br/>[了解]ボタン"]
+    end
+
+    subgraph "💡 ヒント機能（会話画面内統合）"
+        I1["💭 ヒント機能<br/>(会話画面内に統合済み)<br/><br/>日本語で言いたいことを入力<br/>[日本語入力欄]<br/>例: チケットを予約したいです<br/><br/>[ヒントを取得]ボタン<br/><br/>📝 英語表現:<br/>I would like to reserve a ticket."]
+    end
+
+    A1 --> B1
+    A1 --> C1
+    A1 --> D1
+    B1 --> C1
+    C1 --> A1
+    C1 --> I1
+    I1 --> C1
+    D1 --> E1
+    D1 --> F1
+    D1 --> A1
+    E1 --> D1
+    F1 --> D1
+
+    classDef homeScreen fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef conversationScreen fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef managementScreen fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef modalScreen fill:#ffebee,stroke:#c62828,stroke-width:2px
+
+    class A1 homeScreen
+    class C1,I1 conversationScreen
+    class B1,D1,E1,F1 managementScreen
+    class G1 modalScreen

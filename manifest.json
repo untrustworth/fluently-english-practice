@@ -1,0 +1,26 @@
+{
+  "name": "Fluently - 英会話練習アプリ",
+  "short_name": "Fluently",
+  "description": "劇場レセプション職員のための英会話練習アプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ff9a9e",
+  "theme_color": "#ff9a9e",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+flowchart TD
+    Start([🚀 アプリ起動]) --> Home[🏠 ホーム画面<br/>- Fluentlyロゴ画像<br/>- 会話をはじめるボタン<br/>- シチュエーションを選ぶボタン<br/>- 設定ボタン<br/>※全ボタン同一サイズ・半透明]
+
+    Home --> RandomConv[🎲 ランダムシチュエーション<br/>自動選択]
+    Home --> Scenario[📋 シチュエーション選択画面<br/>- プリセット一覧<br/>- 新規登録<br/>- カスタム追加ボタン]
+    Home --> Admin[⚙️ 設定画面]
+
+    RandomConv --> StartConv[🎯 会話開始]
+
+    Scenario --> PresetSelected{選択方法は？}
+    PresetSelected -->|プリセットクリック| StartConv
+    PresetSelected -->|カスタム| Custom[✏️ カスタム入力<br/>- タイトルを入力<br/>- 説明を入力<br/>- カスタム追加ボタン]
+    Custom --> AutoAdd[💾 一覧に自動追加]
+    AutoAdd --> ClickAdded[👆 追加されたアイテムをクリック]
+    ClickAdded --> StartConv
+
+    StartConv --> Conv[💬 会話画面<br/>- (🏠)終了 | 現在:シチュエーション | (🎲)次の会話<br/>- 日本語ヒント入力エリア<br/>- 音声入力ボタン<br/>- 会話ログ表示ボタン（押下中のみ）<br/>- プライバシー注意書き]
+
+    Conv --> Speaking{🎤 音声入力中}
+    Speaking --> Processing[⏳ AI処理中<br/>（1.5秒猶予時間付き）]
+    Processing --> WaitRecording[⏳ 録音終了待機<br/>自然な会話リズム]
+    WaitRecording --> Response[🔊 音声応答<br/>- 音声出力のみ<br/>- 応答文字幕なし]
+    Response --> Conv
+    
+    Conv --> HintBtn{💡 ヒントを取得ボタン}
+    HintBtn -->|押下| HintProcess[⏳ 翻訳処理中<br/>日本語→英語<br/>Gemini 2.0 Flash]
+    HintProcess --> HintResult[✨ 英語表現提案<br/>画面内に結果表示]
+    HintResult --> Conv
+
+    Conv --> LogView{会話ログを表示ボタン<br/>押下中？}
+    LogView -->|Yes| ShowLog[📜 会話ログ表示<br/>- 全会話履歴（職員・観光客）<br/>- ボタンを離すと非表示]
+    LogView -->|No| Conv
+    ShowLog --> Conv
+
+    Conv --> NextConvBtn{🎲 次の会話ボタン？}
+    NextConvBtn -->|押下| NextConvProcess[🔄 会話データクリア<br/>+ ランダムシチュエーション選択]
+    NextConvProcess --> NewConvStart[🎯 新しい会話開始<br/>シチュエーション表示更新]
+    NewConvStart --> Response
+    NextConvBtn -->|未押下| EndConv{会話終了？}
+    
+    Conv --> EndConv
+    EndConv -->|続行| Conv
+    EndConv -->|終了| DataCleanup[🗑️ 会話データ完全削除<br/>プライバシー保護]
+    DataCleanup --> Home
+
+    Admin --> AdminMenu[📊 設定メニュー<br/>- シチュエーション設定<br/>- 音量・その他<br/>- 戻る]
+    AdminMenu --> ScenarioMgmt[📝 シチュエーション管理<br/>- 一覧表示（カスタム追加分含む）<br/>- 編集・削除<br/>- 保存・デフォルトに戻す]
+    AdminMenu --> Settings[⚙️ 設定画面<br/>- APIキー設定・削除<br/>- 音声設定（話速・音量）<br/>- 使用統計表示]
+
+    ScenarioMgmt --> EditScenario[✏️ 編集画面<br/>- 既存データ表示<br/>- 修正・保存]
+
+    EditScenario --> ScenarioMgmt
+    Settings --> AdminMenu
+    ScenarioMgmt --> AdminMenu
+    AdminMenu --> Home
+
+    %% エラーハンドリング
+    Processing --> Error{エラー発生？}
+    Error -->|API Limit| LimitMsg[⚠️ 使用量制限<br/>しばらく後にお試しください<br/>- ホームに戻るボタン]
+    Error -->|API Error| ErrorMsg[❌ APIエラー<br/>管理者にお問い合わせください<br/>- ホームに戻るボタンのみ]
+    Error -->|Input Error| InputError[🔒 入力エラー<br/>不正な入力が検出されました<br/>- 再入力ボタン]
+    Error -->|Success| Response
+    LimitMsg --> Home
+    ErrorMsg --> Home
+    InputError --> Conv
+
+    %% スタイル設定
+    classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef screen fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef process fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef error fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef auto fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+
+    class Start,EndConv startEnd
+    class Home,Scenario,Custom,Conv,Admin,AdminMenu,ScenarioMgmt,Settings,EditScenario,ShowLog,HintInput,HintResult screen
+    class StartConv,Speaking,Processing,WaitRecording,Response,RandomConv,HintProcess process
+    class ClickAdded process
+    class PresetSelected,Error,LogView,HintBtn decision
+    class ErrorMsg error
+    class AutoAdd,DataCleanup auto
+    class LimitMsg,InputError error

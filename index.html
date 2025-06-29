@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluently - English Conversation Practice</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
+<body>
+    <!-- ホーム画面 -->
+    <div id="home-screen" class="screen active">
+        <div class="container">
+            <div class="app-logo-wrapper">
+                <img src="assets/Fluently.png" alt="Fluently" class="app-logo">
+            </div>
+            <div class="button-group">
+                <button id="random-conversation-btn" class="btn btn-secondary btn-medium">
+                    会話をはじめる
+                </button>
+                <button id="scenario-select-btn" class="btn btn-secondary btn-medium">
+                    シチュエーションを選ぶ
+                </button>
+                <button id="admin-btn" class="btn btn-tertiary btn-medium">
+                    設定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- シチュエーション選択画面 -->
+    <div id="scenario-screen" class="screen">
+        <div class="container">
+            <div class="header">
+                <button id="scenario-back-btn" class="btn-back">← 戻る</button>
+                <h2>シチュエーション選択</h2>
+            </div>
+
+            <div class="preset-scenarios">
+                <h3>プリセットシチュエーション</h3>
+                <div id="preset-list" class="scenario-list">
+                    <!-- プリセットシチュエーションがここに動的に挿入される -->
+                </div>
+            </div>
+
+            <div class="custom-scenario">
+                <h3>新規シチュエーション登録</h3>
+                <input type="text" id="custom-title" placeholder="タイトルを入力" class="input-field">
+                <textarea id="custom-description" placeholder="説明を入力" class="textarea-field"></textarea>
+            </div>
+
+            <button id="start-conversation-btn" class="btn btn-tertiary btn-medium">
+                カスタム追加
+            </button>
+        </div>
+    </div>
+
+    <!-- 会話画面 -->
+    <div id="conversation-screen" class="screen">
+        <div class="container">
+            <div class="header">
+                <button id="conversation-home-btn" class="header-btn">🏠</button>
+                <div id="current-scenario" class="scenario-info">現在：チケット予約</div>
+                <button id="next-conversation-btn" class="header-btn">🎲</button>
+            </div>
+
+            <!-- ヒント機能エリア -->
+            <div class="hint-section">
+                <div class="hint-input-area">
+                    <textarea id="hint-japanese-input" placeholder="日本語で言いたいことを入力してください&#10;例：チケットを予約したいです"
+                        class="textarea-field hint-textarea"></textarea>
+                    <button id="hint-translate-btn" class="btn btn-tertiary btn-medium">
+                        ヒントを取得
+                    </button>
+                </div>
+
+                <div id="hint-result" class="hint-result hidden">
+                    <div class="hint-result-label">英語表現：</div>
+                    <div id="hint-english-text" class="hint-english-text"></div>
+                </div>
+            </div>
+
+            <div class="voice-control">
+                <button id="voice-btn" class="voice-btn">
+                    <span class="voice-icon">🎤</span>
+                    <span class="voice-text">話す</span>
+                </button>
+            </div>
+
+            <div class="privacy-notice">
+                注意：入力内容がGoogle AI学習に利用される可能性があります。個人情報の入力はお控えください。
+            </div>
+
+            <div class="log-control">
+                <button id="log-btn" class="btn-log" onmousedown="showLog()" onmouseup="hideLog()"
+                    ontouchstart="showLog()" ontouchend="hideLog()">
+                    会話ログを表示
+                </button>
+                <div id="conversation-log" class="conversation-log hidden">
+                    <!-- 会話ログがここに表示される -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理画面 -->
+    <div id="admin-screen" class="screen">
+        <div class="container">
+            <div class="header">
+                <button id="admin-back-btn" class="btn-back">← 戻る</button>
+                <h2>設定</h2>
+            </div>
+
+            <div class="admin-menu">
+                <button id="scenario-mgmt-btn" class="btn btn-secondary btn-medium">
+                    シチュエーション設定
+                </button>
+                <button id="settings-btn" class="btn btn-secondary btn-medium">
+                    音量・その他
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- シチュエーション管理画面 -->
+    <div id="scenario-mgmt-screen" class="screen">
+        <div class="container">
+            <div class="header">
+                <button id="scenario-mgmt-back-btn" class="btn-back">← 戻る</button>
+                <h2>シチュエーション管理</h2>
+            </div>
+
+            <div id="scenario-mgmt-list" class="scenario-mgmt-list">
+                <!-- 管理用シチュエーション一覧がここに表示される -->
+            </div>
+
+            <div class="scenario-mgmt-actions">
+                <button id="save-scenarios-btn" class="btn btn-tertiary">
+                    保存
+                </button>
+                <button id="reset-scenarios-btn" class="btn btn-tertiary">
+                    デフォルトに戻す
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 設定画面 -->
+    <div id="settings-screen" class="screen">
+        <div class="container">
+            <div class="header">
+                <button id="settings-back-btn" class="btn-back">← 戻る</button>
+                <h2>設定</h2>
+            </div>
+
+            <div class="settings-section">
+                <h3>APIキー設定</h3>
+                <div id="api-key-status" class="api-status">
+                    <span id="api-key-indicator">APIキーが設定されていません</span>
+                </div>
+                <input type="password" id="api-key-input" placeholder="Google AI Studio APIキー (Gemini 2.0 Flash)"
+                    class="input-field">
+                <div class="button-row">
+                    <button id="save-api-key-btn" class="btn btn-secondary">保存</button>
+                    <button id="delete-api-key-btn" class="btn btn-danger">削除</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>音声設定</h3>
+                <label>話速: <input type="range" id="speech-rate" min="0.5" max="2" step="0.1" value="1"></label>
+                <label>音量: <input type="range" id="speech-volume" min="0" max="1" step="0.1" value="1"></label>
+            </div>
+
+            <div class="settings-section">
+                <h3>使用統計</h3>
+                <div id="usage-stats" class="usage-stats">
+                    <div>日別使用量: <span id="daily-usage">0</span>/1500</div>
+                    <div>時間別使用量: <span id="hourly-usage">0</span>/1000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- エラーモーダル -->
+    <div id="error-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>エラー</h3>
+            <p id="error-message"></p>
+            <button id="error-ok-btn" class="btn btn-primary">了解</button>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
