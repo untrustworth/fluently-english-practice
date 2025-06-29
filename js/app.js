@@ -76,6 +76,10 @@ class AppManager {
             this.handleVoiceInput();
         });
 
+        document.getElementById('log-btn').addEventListener('click', () => {
+            this.toggleLog();
+        });
+
         document.getElementById('hint-translate-btn').addEventListener('click', () => {
             this.handleHintTranslation();
         });
@@ -441,7 +445,34 @@ class AppManager {
         // Clear hint results
         this.clearHintResult();
         
+        // Reset log button state
+        const logElement = document.getElementById('conversation-log');
+        const logButton = document.getElementById('log-btn');
+        if (logElement && logButton) {
+            logElement.classList.add('hidden');
+            logButton.textContent = '会話ログを表示';
+        }
+        
         this.showScreen('home');
+    }
+
+    toggleLog() {
+        const logElement = document.getElementById('conversation-log');
+        const logButton = document.getElementById('log-btn');
+        
+        if (logElement && logButton) {
+            const isHidden = logElement.classList.contains('hidden');
+            
+            if (isHidden) {
+                // ログを表示
+                logElement.classList.remove('hidden');
+                logButton.textContent = '会話ログを非表示';
+            } else {
+                // ログを非表示
+                logElement.classList.add('hidden');
+                logButton.textContent = '会話ログを表示';
+            }
+        }
     }
 
     editScenario(scenarioId) {
