@@ -658,6 +658,25 @@ function hideLog() {
     }
 }
 
+function toggleLog() {
+    const logElement = document.getElementById('conversation-log');
+    const logButton = document.getElementById('log-btn');
+    
+    if (logElement && logButton) {
+        const isHidden = logElement.classList.contains('hidden');
+        
+        if (isHidden) {
+            // ログを表示
+            logElement.classList.remove('hidden');
+            logButton.textContent = '会話ログを非表示';
+        } else {
+            // ログを非表示
+            logElement.classList.add('hidden');
+            logButton.textContent = '会話ログを表示';
+        }
+    }
+}
+
 function showError(message) {
     if (window.app) {
         window.app.showError(message);
@@ -677,4 +696,5 @@ document.addEventListener('DOMContentLoaded', () => {
 window.AppManager = AppManager;
 window.showLog = showLog;
 window.hideLog = hideLog;
+window.toggleLog = toggleLog;
 window.showError = showError;

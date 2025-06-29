@@ -92,18 +92,17 @@
                 </button>
             </div>
 
-            <div class="privacy-notice">
-                注意：入力内容がGoogle AI学習に利用される可能性があります。個人情報の入力はお控えください。
-            </div>
-
             <div class="log-control">
-                <button id="log-btn" class="btn-log" onmousedown="showLog()" onmouseup="hideLog()"
-                    ontouchstart="showLog()" ontouchend="hideLog()">
+                <button id="log-btn" class="btn-log" onclick="toggleLog()">
                     会話ログを表示
                 </button>
                 <div id="conversation-log" class="conversation-log hidden">
                     <!-- 会話ログがここに表示される -->
                 </div>
+            </div>
+
+            <div class="privacy-notice">
+                注意：入力内容がGoogle AI学習に利用される可能性があります。個人情報の入力はお控えください。
             </div>
         </div>
     </div>
